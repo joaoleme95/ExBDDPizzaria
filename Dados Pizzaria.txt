@@ -1,0 +1,66 @@
+-- Tabela para os Mestres da Massa
+CREATE TABLE MestreMassa (
+    MestreID NUMBER,
+    Nome VARCHAR(50),
+    Remuneracao DECIMAL(10, 2)
+);
+
+-- Inserção de dados na tabela MestreMassa
+INSERT INTO MestreMassa (MestreID, Nome, Remuneracao) VALUES (1, 'Carlos Silva', 2500.00);
+INSERT INTO MestreMassa (MestreID, Nome, Remuneracao) VALUES (2, 'Maria Santos', 2800.00);
+INSERT INTO MestreMassa (MestreID, Nome, Remuneracao) VALUES (3, 'Luiz Ferreira', 3100.00);
+
+-- Tabela para as Instruções de Preparo
+CREATE TABLE InstrucaoPreparo (
+    InstrucaoID NUMBER,
+    Descricao VARCHAR(500),
+    Autor VARCHAR(50)
+);
+
+-- Inserção de dados na tabela InstrucaoPreparo
+INSERT INTO InstrucaoPreparo (InstrucaoID, Descricao, Autor) VALUES (1, 'Prepare o molho com tomates frescos e manjericão', 'Eduardo Rocha');
+INSERT INTO InstrucaoPreparo (InstrucaoID, Descricao, Autor) VALUES (2, 'Faça a massa de pizza e deixe descansar', 'Maria Santos');
+INSERT INTO InstrucaoPreparo (InstrucaoID, Descricao, Autor) VALUES (3, 'Misture os ingredientes e asse no forno', 'Patricia Vieira');
+
+-- Tabela para os Tipos de Pizza
+CREATE TABLE TipoPizza (
+    TipoID NUMBER,
+    Tamanho NUMBER,
+    Descricao VARCHAR(100),
+    Preco DECIMAL(10, 2),
+    Sabor VARCHAR(50),
+    Ingredientes VARCHAR(500),
+    Embalagem VARCHAR(50),
+    Material VARCHAR(50)
+);
+
+-- Inserção de dados na tabela TipoPizza
+INSERT INTO TipoPizza (TipoID, Tamanho, Descricao, Preco, Sabor, Ingredientes, Embalagem, Material)
+VALUES (1, 12, 'Pizza de Calabresa', 25.00, 'Calabresa', 'Molho de tomate, calabresa, queijo', 'Caixa de papelão', 'Papelão');
+
+INSERT INTO TipoPizza (TipoID, Tamanho, Descricao, Preco, Sabor, Ingredientes, Embalagem, Material)
+VALUES (2, 16, 'Pizza de Mussarela', 30.00, 'Mussarela', 'Molho de tomate, mussarela, orégano', 'Caixa de papelão', 'Papelão');
+
+INSERT INTO TipoPizza (TipoID, Tamanho, Descricao, Preco, Sabor, Ingredientes, Embalagem, Material)
+VALUES (3, 14, 'Pizza de Frango Catupiry', 35.00, 'Frango Catupiry', 'Molho de tomate, frango desfiado, catupiry', 'Caixa de papelão', 'Papelão');
+
+-- Consulta 1: Mestres da Massa e os tipos de pizza que podem criar
+SELECT
+    M.Nome AS MestreMassa,
+    T.Descricao AS TipoPizza,
+    T.Sabor
+FROM MestreMassa M
+INNER JOIN TipoPizza T ON M.MestreID = T.TipoID;
+
+-- Consulta 2: Tipos de pizza e seus ingredientes
+SELECT
+    T.Ingredientes,
+    T.Descricao AS TipoPizza
+FROM TipoPizza T;
+
+-- Consulta 3: Ingredientes e os tipos de pizza onde são utilizados
+SELECT
+    T.Ingredientes AS Ingrediente,
+    I.Descricao
+FROM TipoPizza T
+INNER JOIN InstrucaoPreparo I ON T.TipoID = I.InstrucaoID;
